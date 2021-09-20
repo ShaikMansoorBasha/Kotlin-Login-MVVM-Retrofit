@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!--    // inside this data tag we will define view model-->
+        <!--    // coz view model directly connect with UI look the edit text which has tag-->
+        <!--    // android:text="@={viewmodel.email}" in edit text automatically assign to authviewmodel object email//-->
+        <variable
+            name="viewmodel"
+            type="com.example.mvvm_architecture_android.ui.auth.AuthViewModel" />
+
+    </data>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.LoginActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/txt_Welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:text="MVVM"
+            android:textSize="30sp" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/txt_Welcome"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:padding="18dp">
+
+            <EditText
+                android:id="@+id/edit_text_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="eve.holt@reqres.in"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:text="@={viewmodel.email}"
+             />
+
+            <EditText
+                android:id="@+id/edit_text_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:drawablePadding="16dp"
+                android:hint="pistol"
+                android:padding="12dp"
+                android:text="@={viewmodel.password}"
+                 />
+            <!--Here see  the button is also connect with viewModel onLoginButtonClick function to work -->
+
+            <Button
+                android:id="@+id/button_sign_in"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="@{viewmodel::onLoginButtonClick}"
+                android:text="Sign In"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
