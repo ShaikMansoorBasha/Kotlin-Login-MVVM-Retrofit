@@ -1,17 +1,17 @@
 package com.example.mvvm_architecture_android.data.repositories
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mvvm_architecture_android.data.network.MyAPI
 import com.example.mvvm_architecture_android.ui.LoginModelClass
-import okhttp3.ResponseBody
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class UserRepository {
-    var loginModelClass:LoginModelClass?=null
+    var loginModelClass: LoginModelClass? = null
     fun userLogin(email: String, password: String): LiveData<String> {
         val userLoginResponse = MutableLiveData<String>()
         MyAPI().userLogin(email, password)
@@ -21,12 +21,15 @@ class UserRepository {
                     response: Response<LoginModelClass>
                 ) {
                     if (response.isSuccessful) {
-                        loginModelClass=response.body()
-                        Log.d("===", "onResponse: ${loginModelClass?.error}")
-                        Log.d("===1", "onResponse: ${loginModelClass?.id}")
-                        Log.d("===2", "onResponse: ${loginModelClass?.token}")
+                        loginModelClass = response.body()
                         userLoginResponse.value = loginModelClass?.token
+                    } else if (response.code() == 400) {
+                        val gson = Gson()
+                        val message: LoginModelClass = gson.fromJson(response.errorBody()!!.charStream(), LoginModelClass::class.java)
+                        userLoginResponse.value = message.error
+
                     } else {
+                        loginModelClass = response.body()
                         userLoginResponse.value = response.errorBody().toString()
                     }
                 }

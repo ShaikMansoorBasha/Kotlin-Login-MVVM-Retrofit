@@ -19,6 +19,8 @@ import com.example.mvvm_architecture_android.util.toast
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), AuthListener {
+    var email: String? = null
+    var password: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // we use data binding instead of setContent view with will auto create a new name of ActivityLoginBinding
@@ -30,6 +32,7 @@ class LoginActivity : AppCompatActivity(), AuthListener {
         binding.viewmodel = viewModel
         // Set the interface to viewModel
         viewModel.authListener = this
+
     }
 
     override fun onStarted() {
